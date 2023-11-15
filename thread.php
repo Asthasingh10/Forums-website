@@ -27,15 +27,35 @@
         $title=$row['thread_title'];
         $desc=$row['thread_desc'];
      }
-     if($noResult){
-        echo '<div class="jumbotron jumbotron-fluid">
-                <div class="container">
-                    <p class="display-4">No Threads found</p>
-                    <p class="lead">Be the first person to ask the question</p>
-                </div>
-                </div>';
-    }
+    //  if($noResult){
+    //     echo '<div class="jumbotron jumbotron-fluid">
+    //             <div class="container">
+    //                 <p class="display-4">No Threads found</p>
+    //                 <p class="lead">Be the first person to ask the question</p>
+    //             </div>
+    //             </div>';
+    // }
+    
     ?>
+
+    <?php
+        $showAlert=false;
+        $method=$_SERVER['REQUEST_METHOD'];
+        if($method=='POST'){
+            $comment=$_POST['comment'];
+            $sql="INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`)
+             VALUES ( '$comment', '$id', '0', current_timestamp());";
+            $result=mysqli_query($conn,$sql);
+            $showAlert=true;
+            if($showAlert){
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Your comment has been added!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+            }
+
+        }
+        ?>
 
     <!-- category container starts here  -->
     <div class="container my-3" id="ques">
@@ -68,11 +88,13 @@
         $noResult=true;
         while($row=mysqli_fetch_assoc($result)){
             $noResult=false;
-            $content = $row['comment_content'];   
+            $content = $row['comment_content'];  
+            $comment_time=$row['comment_time'];
             $id = $row['comment_id'];
             echo '<div class="media my-3">
                 <img src="user.jpg" width="54px" class="mr-3" alt="...">
                 <div class="media-body">
+                <p class="my-0"><b>Anonymous user at '.$comment_time.'</b></p>
                 '. $content . ' 
                 </div>
                 </div>';
