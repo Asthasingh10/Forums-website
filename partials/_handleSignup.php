@@ -7,7 +7,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     $cpassword=$_POST['cpassword'];
     $existSql="SELECT * FROM `users` WHERE user_email='$user_email' ";
     $result=mysqli_query($conn,$existSql);
-    $numRows=mysqli_fetch_assoc($result);
+    $numRows=mysqli_num_rows($result);
     if($numRows>0){
         $showError="Email already exist";
     }else{

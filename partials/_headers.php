@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div class="container-fluid">
   <a class="navbar-brand" href="#">Navbar</a>
@@ -28,22 +30,30 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="nav-link " href="contact.php" >Contact</a>
       </li>
     </ul>
-    <div class="d-flex mx-2">
-      <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success mx-2" type="submit">Search</button>
-    </form>
-      <button class="btn btn-primary ml-2" data-bs-toggle="modal" data-bs-target="#loginModal" >Login</button>
-      <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</button>
-    </div>
-    
-  </div>
-</div>
-</nav>
-';
-include 'partials/_loginModal.php';
-include 'partials/_signupModal.php';
-// if(isset($_GET['signupsuccess'])&& ($_GET['signupsuccess']=="true")){
-//     echo "yes";
-// }
-?>
+    <div class="d-flex mx-2">';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
+      echo ' <form class="d-flex" role="search">
+              <input class="form-control me-2 mt-4" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success mx-2 mt-4" type="submit">Search</button>
+              <p class="text-white my-2 mx-2">Welcome '.$_SESSION['user_email']. '</p>
+              <a href="partials/_logout.php" class="btn btn-primary ml-2 mt-3">Logout</a>
+              </form>';
+    }else{
+     echo ' <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success mx-2" type="submit">Search</button>
+            </form>
+            <button class="btn btn-primary ml-2" data-bs-toggle="modal" data-bs-target="#loginModal" >Login</button>
+            <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</button>';
+    }
+     echo '  </div>
+            </div>
+            </nav>';
+
+    include 'partials/_loginModal.php';
+    include 'partials/_signupModal.php';
+    // if(isset($_GET['signupsuccess'])&& ($_GET['signupsuccess']=="true")){
+    //     echo "yes";
+    // }
+    ?>
