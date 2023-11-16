@@ -82,9 +82,11 @@
                     $title = $row['thread_title'];
                     $desc = $row['thread_desc'];    
                     $id = $row['thread_id'];
+                    $thread_time=$row['timestamp'];
                      echo '<div class="media my-3">
                         <img src="user.jpg" width="54px" class="mr-3" alt="...">
                         <div class="media-body">
+                        <p class="my-0"><b>Anonymous user at '.$thread_time.'</b></p>
                         <h5 class="mt-0"><a class="text-dark" href="thread.php?threadid= '.$id.' ">'. $title . '</a></h5>
                         '. $desc . ' 
                         </div>
